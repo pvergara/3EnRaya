@@ -24,7 +24,7 @@ namespace tresenraya.domain
        public void AddFicha(Fichas ficha, int x, int y)
        {
            if (_tablero[x, y] != null)
-               throw new InvalidOperationException("Ya existe una ficha en esa posición.");
+               throw new InvalidOperationException("Ya existe una ficha en esa posiciï¿½n.");
            
            _tablero[x,y] = ficha;
        }

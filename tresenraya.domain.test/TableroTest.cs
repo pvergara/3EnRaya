@@ -5,7 +5,7 @@ namespace tresenraya.domain.test
 {
     public class TableroTest
     {
-        [Fact]
+        [Fact]       
         public void si_inicio_el_tablero_este_no_tiene_fichas()
         {
             Tablero tablero = new Tablero();
@@ -24,26 +24,22 @@ namespace tresenraya.domain.test
             Assert.Equal(ficha,tablero.GetFicha(0,2));
         }
 
+        //RRRRREEEEEDDDDD!!!!!! G R
         [Fact]
         public void si_existe_una_ficha_en_una_posicion_no_se_puede_poner_otra()
         {
-            Tablero tablero = new Tablero();
+            var tablero = new Tablero();
             tablero.AddFicha(Fichas.Aspa, 0, 0);
-            Assert.Throws<InvalidOperationException>(
-                delegate
-                    {
-                        tablero.AddFicha(Fichas.Circulo, 0, 0);
-                    });
+            Assert.Throws<InvalidOperationException>(() => tablero.AddFicha(Fichas.Circulo, 0, 0));
         }
 
+        //RRRRREEEEEDDDDD!!!!!! G R
         [Fact]
-        public void diferencia_entre_los_dos_tipos_de_fichas_sobre_el_tablero_siempre_es_cero_o_uno()
+        public void si_añadimos_dos_veces_una_ficha_del_mismo_tipo_en_posiciones_distintas_se_lanza_excepcion()
         {
-            Tablero tablero=new Tablero();
-            tablero.AddFicha(Fichas.Aspa,0,0);
-            Assert.Equal(1,Math.Abs(tablero.GetNumeroFichas(Fichas.Aspa)-tablero.GetNumeroFichas(Fichas.Circulo)));
-            tablero.AddFicha(Fichas.Circulo,0,1);
-            Assert.Equal(0, Math.Abs(tablero.GetNumeroFichas(Fichas.Aspa) - tablero.GetNumeroFichas(Fichas.Circulo)));  
+            var tablero = new Tablero();
+            tablero.AddFicha(Fichas.Aspa, 0, 0);
+            Assert.Throws<InvalidOperationException>(() => tablero.AddFicha(Fichas.Aspa, 1, 0));
         }
 
         [Fact]
