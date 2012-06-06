@@ -25,8 +25,14 @@ namespace tresenraya.domain
        {
            if (_tablero[x, y] != null)
                throw new InvalidOperationException("Ya existe una ficha en esa posici�n.");
-           
+
            _tablero[x,y] = ficha;
+
+           if (Math.Abs(GetNumeroFichas(Fichas.Aspa) - GetNumeroFichas(Fichas.Circulo)) > 1)
+           {
+               _tablero[x, y] = null;
+               throw new InvalidOperationException("No se pueden añadir dos fichas seguidas.");
+           }
        }
 
        public int GetNumeroFichas(Fichas fichas)

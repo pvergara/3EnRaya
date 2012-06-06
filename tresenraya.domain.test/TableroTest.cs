@@ -1,6 +1,7 @@
 using System;
 using Xunit;
 
+
 namespace tresenraya.domain.test
 {
     public class TableroTest
@@ -48,7 +49,11 @@ namespace tresenraya.domain.test
             Tablero tablero = new Tablero();
 
             tablero.AddFicha(Fichas.Aspa, 0, 0);
+            tablero.AddFicha(Fichas.Circulo, 1, 0);
+
             tablero.AddFicha(Fichas.Aspa, 0, 1);
+            tablero.AddFicha(Fichas.Circulo, 2, 0);
+
             Assert.Equal(null, tablero.GetGanador());
             tablero.AddFicha(Fichas.Aspa, 0, 2);
             Assert.Equal(Fichas.Aspa, tablero.GetGanador());
@@ -60,7 +65,11 @@ namespace tresenraya.domain.test
             Tablero tablero = new Tablero();
 
             tablero.AddFicha(Fichas.Aspa, 1, 0);
+            tablero.AddFicha(Fichas.Circulo, 2, 0);
+
             tablero.AddFicha(Fichas.Aspa, 1, 1);
+            tablero.AddFicha(Fichas.Circulo, 2, 1);
+            
             Assert.Equal(null, tablero.GetGanador());
             tablero.AddFicha(Fichas.Aspa, 1, 2);
             Assert.Equal(Fichas.Aspa, tablero.GetGanador());   
@@ -72,7 +81,11 @@ namespace tresenraya.domain.test
             Tablero tablero = new Tablero();
 
             tablero.AddFicha(Fichas.Aspa, 0, 2);
+            tablero.AddFicha(Fichas.Circulo, 1, 2);
+
             tablero.AddFicha(Fichas.Aspa, 1, 1);
+            tablero.AddFicha(Fichas.Circulo, 2, 2);
+            
             Assert.Equal(null, tablero.GetGanador());
             tablero.AddFicha(Fichas.Aspa, 2, 0);
             Assert.Equal(Fichas.Aspa, tablero.GetGanador());
