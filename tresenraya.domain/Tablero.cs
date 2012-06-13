@@ -4,8 +4,10 @@ namespace tresenraya.domain
 {
    public class Tablero
    {
+       private Fichas? _ultimaFicha; 
        private const int size = 3;
        private readonly Fichas? [,] _tablero =new Fichas?[size,size];
+
        public int GetNumeroFichas()
        {
            int numFichas = 0;
@@ -23,16 +25,16 @@ namespace tresenraya.domain
 
        public void AddFicha(Fichas ficha, int x, int y)
        {
+           if (ficha == _ultimaFicha)
+           {               
+               throw new InvalidOperationException("No se pueden añadir dos fichas seguidas.");
+           }          
+
            if (_tablero[x, y] != null)
                throw new InvalidOperationException("Ya existe una ficha en esa posici�n.");
-
+           
            _tablero[x,y] = ficha;
-
-           if (Math.Abs(GetNumeroFichas(Fichas.Aspa) - GetNumeroFichas(Fichas.Circulo)) > 1)
-           {
-               _tablero[x, y] = null;
-               throw new InvalidOperationException("No se pueden añadir dos fichas seguidas.");
-           }
+           _ultimaFicha = ficha;
        }
 
        public int GetNumeroFichas(Fichas fichas)
@@ -123,6 +125,22 @@ namespace tresenraya.domain
            return null;
        }
 
+       private Fichas _ficha;
+       public Tablero Add(Fichas ficha)
+       {
+           _ficha = ficha;
+           return this;
+
+           var servicioMock = new Mock<ServicioWeb1>();
+           servicioMock.
+               SetUp(sm => sm.MetodoDelServicio(1)).
+               Returns(3);
+       }
+
+       public void En(Posicion posicion)
+       {
+           AddFicha(_ficha, posicion.Fila, posicion.Columna);
+       }
    }
 
 }

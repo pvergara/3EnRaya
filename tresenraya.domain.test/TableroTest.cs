@@ -40,7 +40,8 @@ namespace tresenraya.domain.test
         {
             var tablero = new Tablero();
             tablero.AddFicha(Fichas.Aspa, 0, 0);
-            Assert.Throws<InvalidOperationException>(() => tablero.AddFicha(Fichas.Aspa, 1, 0));
+            tablero.AddFicha(Fichas.Circulo, 1, 0);
+            Assert.Throws<InvalidOperationException>(() => tablero.AddFicha(Fichas.Circulo, 2, 0));
         }
 
         [Fact]
@@ -91,6 +92,23 @@ namespace tresenraya.domain.test
             Assert.Equal(Fichas.Aspa, tablero.GetGanador());
         }
 
+        [Fact]
+        public void poetry_mode()
+        {
+            //Arrange
+            var tablero = new Tablero();
+            const Fichas ficha = Fichas.Aspa;
+            const byte fila = 0;
+            const byte columna = 0;
+            var posicion = new Posicion(fila,columna);
 
+            //Action
+            tablero.
+                Add(ficha).
+                En(posicion);
+
+            //Assert
+            Assert.Equal(ficha, tablero.GetFicha(fila, columna));
+        }
     }
 }
