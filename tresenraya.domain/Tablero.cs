@@ -130,11 +130,6 @@ namespace tresenraya.domain
        {
            _ficha = ficha;
            return this;
-
-           var servicioMock = new Mock<ServicioWeb1>();
-           servicioMock.
-               SetUp(sm => sm.MetodoDelServicio(1)).
-               Returns(3);
        }
 
        public void En(Posicion posicion)
