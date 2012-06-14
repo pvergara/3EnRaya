@@ -47,20 +47,17 @@ namespace tresenraya.domain
            return numFichas;
        }
 
-       public Fichas? GetGanador()
+       private Fichas? GetGanadorFilas()
        {
-           Fichas? fichaEncontrada = null;
-           int numVeces = 0;
-
            //Comprobamos por filas
            for (int i = 0; i < size; i++)
            {
-               fichaEncontrada = null;
-               numVeces = 0;
+               Fichas? fichaEncontrada = null;
+               int numVeces = 0;
 
                for (int j = 0; j < size; j++)
                {
-                   //Si hay una casilla vacia, o el tipo de ficha no coincide con la anteriore, saltamos a la siguiente fila a comprobar.
+                   //Si hay una casilla vacia, o el tipo de ficha no coincide con la anterior, saltamos a la siguiente fila a comprobar.
                    if (_tablero[i, j] == null || fichaEncontrada != null && _tablero[i, j] != fichaEncontrada)
                        break;
 
@@ -71,15 +68,21 @@ namespace tresenraya.domain
                    return fichaEncontrada;
            }
 
+           //No hay ningún ganador en ninguna fila.
+           return null;
+       }
+
+       private Fichas? GetGanadorColumnas()
+       {
            //Comprobamos por columnas
            for (int j = 0; j < size; j++)
            {
-               fichaEncontrada = null;
-               numVeces = 0;
+               Fichas? fichaEncontrada = null;
+               int numVeces = 0;
 
                for (int i = 0; i < size; i++)
                {
-                   //Si hay una casilla vacia, o el tipo de ficha no coincide con la anteriore, saltamos a la siguiente columna a comprobar.
+                   //Si hay una casilla vacia, o el tipo de ficha no coincide con la anterior, saltamos a la siguiente columna a comprobar.
                    if (_tablero[i, j] == null || fichaEncontrada != null && _tablero[i, j] != fichaEncontrada)
                        break;
 
@@ -90,38 +93,63 @@ namespace tresenraya.domain
                    return fichaEncontrada;
            }
 
+           //No hay ningún ganador en ninguna columna.
+           return null;
+       }
+
+       private Fichas? GetGanadorPrimeraDiagonal()
+       {
            //Primera Diagonal
-           fichaEncontrada = null;
-           numVeces = 0;
+           Fichas? fichaEncontrada = null;
+           int numVeces = 0;
            for (int i = 0; i < size; i++)
-           {  
-                   //Si hay una casilla vacia, o el tipo de ficha no coincide con la anteriore, saltamos a la siguiente fila a comprobar.
-                   if (_tablero[i, i] == null || fichaEncontrada != null && _tablero[i, i] != fichaEncontrada)
-                       break;
+           {
+               //Si hay una casilla vacia, o el tipo de ficha no coincide con la anterior, dejamos de seguir buscando.
+               if (_tablero[i, i] == null || fichaEncontrada != null && _tablero[i, i] != fichaEncontrada)
+                   break;
 
-                   numVeces++;
-                   fichaEncontrada = _tablero[i, i];
+               numVeces++;
+               fichaEncontrada = _tablero[i, i];
            }
 
-           if (numVeces == size)
-              return fichaEncontrada;
-           
+           return numVeces == size ? fichaEncontrada : null; //Null =>No hay ganador en la diagonal.
+       }
+
+       private Fichas? GetGanadorSegundaDiagonal()
+       {
            //Segunda Diagonal
-           fichaEncontrada = null;
-           numVeces = 0;
+           Fichas? fichaEncontrada = null;
+           int numVeces = 0;
            for (int i = 0; i < size; i++)
-           {  
-                   //Si hay una casilla vacia, o el tipo de ficha no coincide con la anteriore, saltamos a la siguiente fila a comprobar.
-                   if (_tablero[i, size-1-i] == null || fichaEncontrada != null && _tablero[i, size-1-i] != fichaEncontrada)
-                       break;
+           {
+               //Si hay una casilla vacia, o el tipo de ficha no coincide con la anterior, dejamos de seguir buscando.
+               if (_tablero[i, size - 1 - i] == null || fichaEncontrada != null && _tablero[i, size - 1 - i] != fichaEncontrada)
+                   break;
 
-                   numVeces++;
-                   fichaEncontrada = _tablero[i, size - 1 - i];
+               numVeces++;
+               fichaEncontrada = _tablero[i, size - 1 - i];
            }
 
-           if (numVeces == size)
-              return fichaEncontrada;
-           
+           return numVeces == size ? fichaEncontrada : null; //Null =>No hay ganador en la diagonal.
+       }
+
+       public Fichas? GetGanador()
+       {
+           Fichas? ganador;
+
+           if ((ganador = GetGanadorFilas()) != null) 
+               return ganador;
+
+           if ((ganador = GetGanadorColumnas()) != null)
+               return ganador;
+
+           if ((ganador = GetGanadorPrimeraDiagonal()) != null)
+               return ganador;
+
+           if ((ganador = GetGanadorSegundaDiagonal()) != null)
+               return ganador;
+
+           //No hay ningún ganador.
            return null;
        }
 
