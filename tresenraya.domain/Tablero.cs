@@ -2,168 +2,176 @@ using System;
 
 namespace tresenraya.domain
 {
-   public class Tablero
-   {
-       private Fichas? _ultimaFicha; 
-       private const int size = 3;
-       private readonly Fichas? [,] _tablero =new Fichas?[size,size];
+    public class Tablero
+    {
+        private Fichas? _ultimaFicha;
+        private readonly Fichas?[,] _tablero;
+        private Fichas _ficha;
+        private readonly OpcionesDelJuego _opcionesDelJuego;
 
-       public int GetNumeroFichas()
-       {
-           int numFichas = 0;
-           for (int i = 0; i < size; i++)
-               for (int j = 0; j < size; j++)
-                   if (_tablero[i, j] !=null)
-                       numFichas++;
-           return numFichas;
-       }
+        public Tablero()
+        {
+            _opcionesDelJuego = OpcionesDelJuego.GetOpcionesDelJuego();
+            _tablero = new Fichas?[_opcionesDelJuego.RangoFilaColumna, _opcionesDelJuego.RangoFilaColumna];
+        }
 
-       public Fichas? GetFicha(int x, int y)
-       {
-           return _tablero[x,y];
-       }
+        public int GetNumeroFichas()
+        {
+            int numFichas = 0;
+            for (int i = 0; i < _opcionesDelJuego.RangoFilaColumna; i++)
+                for (int j = 0; j < _opcionesDelJuego.RangoFilaColumna; j++)
+                    if (_tablero[i, j] != null)
+                        numFichas++;
+            return numFichas;
+        }
 
-       public void AddFicha(Fichas ficha, int x, int y)
-       {
-           if (ficha == _ultimaFicha)
-           {               
-               throw new InvalidOperationException("No se pueden añadir dos fichas seguidas.");
-           }          
+        public Fichas? GetFicha(Posicion posicion)
+        {
+            return _tablero[posicion.Columna,posicion.Fila];
+        }
 
-           if (_tablero[x, y] != null)
-               throw new InvalidOperationException("Ya existe una ficha en esa posici�n.");
-           
-           _tablero[x,y] = ficha;
-           _ultimaFicha = ficha;
-       }
 
-       public int GetNumeroFichas(Fichas fichas)
-       {
-           int numFichas = 0;
-           for (int i = 0; i < size; i++)
-               for (int j = 0; j < size; j++)
-                   if (_tablero[i, j] != fichas)
-                       numFichas++;
-           return numFichas;
-       }
+        public void AddFicha(Fichas ficha, Posicion posicion)
+        {
+            if (ficha == _ultimaFicha)
+            {
+                throw new InvalidOperationException("No se pueden añadir dos fichas seguidas.");
+            }
 
-       private Fichas? GetGanadorFilas()
-       {
-           //Comprobamos por filas
-           for (int i = 0; i < size; i++)
-           {
-               Fichas? fichaEncontrada = null;
-               int numVeces = 0;
+            if (_tablero[posicion.Columna, posicion.Fila] != null)
+                throw new InvalidOperationException("Ya existe una ficha en esa posici�n.");
 
-               for (int j = 0; j < size; j++)
-               {
-                   //Si hay una casilla vacia, o el tipo de ficha no coincide con la anterior, saltamos a la siguiente fila a comprobar.
-                   if (_tablero[i, j] == null || fichaEncontrada != null && _tablero[i, j] != fichaEncontrada)
-                       break;
+            _tablero[posicion.Columna, posicion.Fila] = ficha;
+            _ultimaFicha = ficha;
+        }
 
-                   numVeces++;
-                   fichaEncontrada = _tablero[i, j];
-               }
-               if (numVeces == size)
-                   return fichaEncontrada;
-           }
+        public int GetNumeroFichas(Fichas fichas)
+        {
+            int numFichas = 0;
+            for (int i = 0; i < _opcionesDelJuego.RangoFilaColumna; i++)
+                for (int j = 0; j < _opcionesDelJuego.RangoFilaColumna; j++)
+                    if (_tablero[i, j] != fichas)
+                        numFichas++;
+            return numFichas;
+        }
 
-           //No hay ningún ganador en ninguna fila.
-           return null;
-       }
+        private Fichas? GetGanadorFilas()
+        {
+            //Comprobamos por filas
+            for (int i = 0; i < _opcionesDelJuego.RangoFilaColumna; i++)
+            {
+                Fichas? fichaEncontrada = null;
+                int numVeces = 0;
 
-       private Fichas? GetGanadorColumnas()
-       {
-           //Comprobamos por columnas
-           for (int j = 0; j < size; j++)
-           {
-               Fichas? fichaEncontrada = null;
-               int numVeces = 0;
+                for (int j = 0; j < _opcionesDelJuego.RangoFilaColumna; j++)
+                {
+                    //Si hay una casilla vacia, o el tipo de ficha no coincide con la anterior, saltamos a la siguiente fila a comprobar.
+                    if (_tablero[i, j] == null || fichaEncontrada != null && _tablero[i, j] != fichaEncontrada)
+                        break;
 
-               for (int i = 0; i < size; i++)
-               {
-                   //Si hay una casilla vacia, o el tipo de ficha no coincide con la anterior, saltamos a la siguiente columna a comprobar.
-                   if (_tablero[i, j] == null || fichaEncontrada != null && _tablero[i, j] != fichaEncontrada)
-                       break;
+                    numVeces++;
+                    fichaEncontrada = _tablero[i, j];
+                }
+                if (numVeces == _opcionesDelJuego.RangoFilaColumna)
+                    return fichaEncontrada;
+            }
 
-                   numVeces++;
-                   fichaEncontrada = _tablero[i, j];
-               }
-               if (numVeces == size)
-                   return fichaEncontrada;
-           }
+            //No hay ningún ganador en ninguna fila.
+            return null;
+        }
 
-           //No hay ningún ganador en ninguna columna.
-           return null;
-       }
+        private Fichas? GetGanadorColumnas()
+        {
+            //Comprobamos por columnas
+            for (int j = 0; j < _opcionesDelJuego.RangoFilaColumna; j++)
+            {
+                Fichas? fichaEncontrada = null;
+                int numVeces = 0;
 
-       private Fichas? GetGanadorPrimeraDiagonal()
-       {
-           //Primera Diagonal
-           Fichas? fichaEncontrada = null;
-           int numVeces = 0;
-           for (int i = 0; i < size; i++)
-           {
-               //Si hay una casilla vacia, o el tipo de ficha no coincide con la anterior, dejamos de seguir buscando.
-               if (_tablero[i, i] == null || fichaEncontrada != null && _tablero[i, i] != fichaEncontrada)
-                   break;
+                for (int i = 0; i < _opcionesDelJuego.RangoFilaColumna; i++)
+                {
+                    //Si hay una casilla vacia, o el tipo de ficha no coincide con la anterior, saltamos a la siguiente columna a comprobar.
+                    if (_tablero[i, j] == null || fichaEncontrada != null && _tablero[i, j] != fichaEncontrada)
+                        break;
 
-               numVeces++;
-               fichaEncontrada = _tablero[i, i];
-           }
+                    numVeces++;
+                    fichaEncontrada = _tablero[i, j];
+                }
+                if (numVeces == _opcionesDelJuego.RangoFilaColumna)
+                    return fichaEncontrada;
+            }
 
-           return numVeces == size ? fichaEncontrada : null; //Null =>No hay ganador en la diagonal.
-       }
+            //No hay ningún ganador en ninguna columna.
+            return null;
+        }
 
-       private Fichas? GetGanadorSegundaDiagonal()
-       {
-           //Segunda Diagonal
-           Fichas? fichaEncontrada = null;
-           int numVeces = 0;
-           for (int i = 0; i < size; i++)
-           {
-               //Si hay una casilla vacia, o el tipo de ficha no coincide con la anterior, dejamos de seguir buscando.
-               if (_tablero[i, size - 1 - i] == null || fichaEncontrada != null && _tablero[i, size - 1 - i] != fichaEncontrada)
-                   break;
+        private Fichas? GetGanadorPrimeraDiagonal()
+        {
+            //Primera Diagonal
+            Fichas? fichaEncontrada = null;
+            int numVeces = 0;
+            for (int i = 0; i < _opcionesDelJuego.RangoFilaColumna; i++)
+            {
+                //Si hay una casilla vacia, o el tipo de ficha no coincide con la anterior, dejamos de seguir buscando.
+                if (_tablero[i, i] == null || fichaEncontrada != null && _tablero[i, i] != fichaEncontrada)
+                    break;
 
-               numVeces++;
-               fichaEncontrada = _tablero[i, size - 1 - i];
-           }
+                numVeces++;
+                fichaEncontrada = _tablero[i, i];
+            }
 
-           return numVeces == size ? fichaEncontrada : null; //Null =>No hay ganador en la diagonal.
-       }
+            return numVeces == _opcionesDelJuego.RangoFilaColumna ? fichaEncontrada : null; //Null =>No hay ganador en la diagonal.
+        }
 
-       public Fichas? GetGanador()
-       {
-           Fichas? ganador;
+        private Fichas? GetGanadorSegundaDiagonal()
+        {
+            //Segunda Diagonal
+            Fichas? fichaEncontrada = null;
+            int numVeces = 0;
+            for (int i = 0; i < _opcionesDelJuego.RangoFilaColumna; i++)
+            {
+                //Si hay una casilla vacia, o el tipo de ficha no coincide con la anterior, dejamos de seguir buscando.
+                if (_tablero[i, _opcionesDelJuego.RangoFilaColumna - 1 - i] == null || fichaEncontrada != null && _tablero[i, _opcionesDelJuego.RangoFilaColumna - 1 - i] != fichaEncontrada)
+                    break;
 
-           if ((ganador = GetGanadorFilas()) != null) 
-               return ganador;
+                numVeces++;
+                fichaEncontrada = _tablero[i, _opcionesDelJuego.RangoFilaColumna - 1 - i];
+            }
 
-           if ((ganador = GetGanadorColumnas()) != null)
-               return ganador;
+            return numVeces == _opcionesDelJuego.RangoFilaColumna ? fichaEncontrada : null; //Null =>No hay ganador en la diagonal.
+        }
 
-           if ((ganador = GetGanadorPrimeraDiagonal()) != null)
-               return ganador;
+        public Fichas? GetGanador()
+        {
+            Fichas? ganador;
 
-           if ((ganador = GetGanadorSegundaDiagonal()) != null)
-               return ganador;
+            if ((ganador = GetGanadorFilas()) != null)
+                return ganador;
 
-           //No hay ningún ganador.
-           return null;
-       }
+            if ((ganador = GetGanadorColumnas()) != null)
+                return ganador;
 
-       private Fichas _ficha;
-       public Tablero Add(Fichas ficha)
-       {
-           _ficha = ficha;
-           return this;
-       }
+            if ((ganador = GetGanadorPrimeraDiagonal()) != null)
+                return ganador;
 
-       public void En(Posicion posicion)
-       {
-           AddFicha(_ficha, posicion.Fila, posicion.Columna);
-       }
-   }
+            if ((ganador = GetGanadorSegundaDiagonal()) != null)
+                return ganador;
+
+            //No hay ningún ganador.
+            return null;
+        }
+
+        public Tablero Add(Fichas ficha)
+        {
+            _ficha = ficha;
+            return this;
+        }
+
+        public void En(Posicion posicion)
+        {
+            AddFicha(_ficha, posicion);
+        }
+
+    }
 
 }
