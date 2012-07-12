@@ -26,6 +26,12 @@ namespace tresenraya.ui
                     buttonFicha[i, j] = bf;
                     this.Controls.Add(bf);
                 }
+
+            if (tablero.GetGanador()!=null)
+            {
+                btnFin.Visible = true;
+                pictureBoxLineasDivisorias.Enabled = false;
+            }
         }
 
         private ButtonFicha CrearBoton(byte x, byte y, int posx, int posy, Fichas? ficha)
@@ -77,6 +83,12 @@ namespace tresenraya.ui
             var posicion = new Posicion((byte) bf.Posicion.Fila, (byte) bf.Posicion.Columna);
             tablero.AddFicha(TurnoFicha, posicion);
             refreshTablero();
+
+            if (tablero.GetGanador() != null)
+            {
+                btnFin.Visible = true;
+                pictureBoxLineasDivisorias.Enabled = false;
+            }
         }
 
         //TODO: Cambiar esto...
@@ -110,6 +122,7 @@ namespace tresenraya.ui
         {
             tablero=new Tablero();
             refreshTablero();
+            btnFin.Visible = false;
         }
     }
 }

@@ -43,6 +43,7 @@ namespace tresenraya.ui
             this.button8 = new System.Windows.Forms.Button();
             this.buttonSalir = new System.Windows.Forms.Button();
             this.buttonNuevaPartida = new System.Windows.Forms.Button();
+            this.btnFin = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLineasDivisorias)).BeginInit();
             this.SuspendLayout();
             // 
@@ -226,12 +227,31 @@ namespace tresenraya.ui
             this.buttonNuevaPartida.UseVisualStyleBackColor = false;
             this.buttonNuevaPartida.Click += new System.EventHandler(this.ButtonNuevaPartidaClick);
             // 
+            // btnFin
+            // 
+            this.btnFin.BackColor = System.Drawing.Color.Transparent;
+            this.btnFin.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFin.FlatAppearance.BorderSize = 0;
+            this.btnFin.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnFin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnFin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFin.Font = new System.Drawing.Font("Papyrus", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFin.ForeColor = System.Drawing.Color.White;
+            this.btnFin.Location = new System.Drawing.Point(287, 3);
+            this.btnFin.Name = "btnFin";
+            this.btnFin.Size = new System.Drawing.Size(154, 36);
+            this.btnFin.TabIndex = 6;
+            this.btnFin.Text = "Tacháááánnnn!!!! (fin)";
+            this.btnFin.UseVisualStyleBackColor = false;
+            this.btnFin.Visible = false;
+            // 
             // FormTablero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(657, 462);
+            this.Controls.Add(this.btnFin);
             this.Controls.Add(this.buttonNuevaPartida);
             this.Controls.Add(this.buttonSalir);
             this.Controls.Add(this.pictureBoxLineasDivisorias);
@@ -271,6 +291,8 @@ namespace tresenraya.ui
                     buttonFicha[i, j].Text = GetStringFicha(tablero.GetFicha(posicion));
                 }
         }
+
+        private System.Windows.Forms.Button btnFin;
     }
 }
 

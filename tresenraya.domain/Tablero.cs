@@ -39,7 +39,7 @@ namespace tresenraya.domain
             }
 
             if (_tablero[posicion.Columna, posicion.Fila] != null)
-                throw new InvalidOperationException("Ya existe una ficha en esa posici�n.");
+                throw new InvalidOperationException("Ya existe una ficha en esa posición.");
 
             _tablero[posicion.Columna, posicion.Fila] = ficha;
             _ultimaFicha = ficha;
