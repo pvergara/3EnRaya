@@ -28,7 +28,9 @@ namespace tresenraya.ui
             for (byte i = 0; i < 3; i++)
                 for (byte j = 0; j < 3; j++)
                 {
-                    ButtonFicha bf = crear_boton(i, j, 139 + (150 * i), 78 + 127 * j, tablero.GetFicha(i, j));
+                    var posicion = new Posicion(i, j);
+                    tablero.AddFicha(TurnoFicha, posicion);
+                    ButtonFicha bf = crear_boton(i, j, 139 + (150 * i), 78 + 127 * j, tablero.GetFicha(posicion));
                     buttonFicha[i, j] = bf;
                     this.Controls.Add(bf);
                 }
@@ -81,7 +83,8 @@ namespace tresenraya.ui
         private void buttonFicha_Click(object sender, EventArgs e)
         {
             ButtonFicha bf = (ButtonFicha)sender;
-            tablero.AddFicha(TurnoFicha, bf.Posicion.Fila, bf.Posicion.Columna);
+            Posicion posicion = new Posicion((byte) bf.Posicion.Fila, (byte) bf.Posicion.Columna);
+            tablero.AddFicha(TurnoFicha, posicion);
             refreshTablero();
         }
 
@@ -89,7 +92,10 @@ namespace tresenraya.ui
         {
             for (byte i = 0; i < 3; i++)
                 for (byte j = 0; j < 3; j++)
-                    buttonFicha[i, j].Text = getStringFicha(tablero.GetFicha(i, j));
+                {
+                    var posicion = new Posicion(i, j);
+                    buttonFicha[i, j].Text = getStringFicha(tablero.GetFicha(posicion));
+                }
         }
 
         //TODO: Cambiar esto...
