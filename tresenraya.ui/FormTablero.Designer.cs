@@ -1,4 +1,6 @@
-﻿namespace tresenraya.ui
+﻿using tresenraya.domain;
+
+namespace tresenraya.ui
 {
     partial class FormTablero
     {
@@ -204,7 +206,7 @@
             this.buttonSalir.TabIndex = 4;
             this.buttonSalir.Text = "Salir";
             this.buttonSalir.UseVisualStyleBackColor = false;
-            this.buttonSalir.Click += new System.EventHandler(this.buttonSalir_Click);
+            this.buttonSalir.Click += new System.EventHandler(this.ButtonSalirClick);
             // 
             // buttonNuevaPartida
             // 
@@ -222,7 +224,7 @@
             this.buttonNuevaPartida.TabIndex = 5;
             this.buttonNuevaPartida.Text = "Nueva partida";
             this.buttonNuevaPartida.UseVisualStyleBackColor = false;
-            this.buttonNuevaPartida.Click += new System.EventHandler(this.buttonNuevaPartida_Click);
+            this.buttonNuevaPartida.Click += new System.EventHandler(this.ButtonNuevaPartidaClick);
             // 
             // FormTablero
             // 
@@ -257,6 +259,18 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button buttonSalir;
         private System.Windows.Forms.Button buttonNuevaPartida;
+        private Tablero tablero = new Tablero();
+        private readonly ButtonFicha[,] buttonFicha = new ButtonFicha[3, 3];
+
+        private void refreshTablero()
+        {
+            for (byte i = 0; i < 3; i++)
+                for (byte j = 0; j < 3; j++)
+                {
+                    var posicion = new Posicion(i, j);
+                    buttonFicha[i, j].Text = GetStringFicha(tablero.GetFicha(posicion));
+                }
+        }
     }
 }
 
