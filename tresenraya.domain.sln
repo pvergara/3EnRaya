@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tresenraya.domain", "tresen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tresenraya.domain.test", "tresenraya.domain.test\tresenraya.domain.test.csproj", "{8BA1A729-3FA2-4FD6-B72B-C3CD1A26FE8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tresenraya.domain.test.ui", "tresenraya.domain.test.ui\tresenraya.domain.test.ui.csproj", "{7C5E817C-B42A-4F79-AAD3-A7D2C9772D06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tresenraya.ui.test", "tresenraya.domain.test.ui\tresenraya.ui.test.csproj", "{7C5E817C-B42A-4F79-AAD3-A7D2C9772D06}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tresenraya.ui", "tresenraya.ui\tresenraya.ui.csproj", "{A6800F5B-5B93-4F45-BF3A-AEE7CF9F2F13}"
 EndProject
