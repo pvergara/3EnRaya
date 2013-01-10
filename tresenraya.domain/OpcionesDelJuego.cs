@@ -6,7 +6,7 @@
 
         public byte RangoFilaColumna
         {
-            get { return 3; }
+            get { return 4; }
         }
 
         public static OpcionesDelJuego GetOpcionesDelJuego()
