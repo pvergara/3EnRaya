@@ -1,4 +1,4 @@
-﻿namespace tresenraya.domain
+namespace tresenraya.domain
 {
     public class OpcionesDelJuego
     {
@@ -6,7 +6,7 @@
 
         public byte RangoFilaColumna
         {
-            get { return 4; }
+            get { return 3; }
         }
 
         public static OpcionesDelJuego GetOpcionesDelJuego()
