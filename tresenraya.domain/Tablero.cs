@@ -30,6 +30,7 @@ namespace tresenraya.domain
             return _tablero[posicion.Columna,posicion.Fila];
         }
 
+
         public void AddFicha(Fichas ficha, Posicion posicion)
         {
             if (ficha == _ultimaFicha)
@@ -42,6 +43,16 @@ namespace tresenraya.domain
 
             _tablero[posicion.Columna, posicion.Fila] = ficha;
             _ultimaFicha = ficha;
+        }
+
+        public int GetNumeroFichas(Fichas fichas)
+        {
+            int numFichas = 0;
+            for (int i = 0; i < _opcionesDelJuego.RangoFilaColumna; i++)
+                for (int j = 0; j < _opcionesDelJuego.RangoFilaColumna; j++)
+                    if (_tablero[i, j] != fichas)
+                        numFichas++;
+            return numFichas;
         }
 
         private Fichas? GetGanadorFilas()
