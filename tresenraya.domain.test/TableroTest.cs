@@ -46,6 +46,7 @@ namespace tresenraya.domain.test
             Assert.Throws<InvalidOperationException>(() => tablero.AddFicha(Fichas.Circulo, new Posicion(1, 0)));
         }
 
+
         [Fact]
         public void si_todas_las_fichas_de_misma_fila_son_iguales_ganan_esas_fichas()
         {
@@ -57,11 +58,14 @@ namespace tresenraya.domain.test
             tablero.AddFicha(Fichas.Aspa, new Posicion(0, 1));
             tablero.AddFicha(Fichas.Circulo, new Posicion(2, 0));
 
-            Assert.Equal(null, tablero.GetGanador());
             tablero.AddFicha(Fichas.Aspa, new Posicion(0, 2));
+            tablero.AddFicha(Fichas.Circulo, new Posicion(3, 0));
+
+            Assert.Equal(null, tablero.GetGanador());
+            tablero.AddFicha(Fichas.Aspa, new Posicion(0, 3));
             Assert.Equal(Fichas.Aspa, tablero.GetGanador());
         }
-        
+
         [Fact]
         public void si_todas_las_fichas_de_misma_columna_son_iguales_ganan_esas_fichas()
         {
@@ -72,10 +76,13 @@ namespace tresenraya.domain.test
 
             tablero.AddFicha(Fichas.Aspa, new Posicion(1, 1));
             tablero.AddFicha(Fichas.Circulo, new Posicion(2, 1));
-            
-            Assert.Equal(null, tablero.GetGanador());
+
             tablero.AddFicha(Fichas.Aspa, new Posicion(1, 2));
-            Assert.Equal(Fichas.Aspa, tablero.GetGanador());   
+            tablero.AddFicha(Fichas.Circulo, new Posicion(2, 2));
+
+            Assert.Equal(null, tablero.GetGanador());
+            tablero.AddFicha(Fichas.Aspa, new Posicion(1, 3));
+            Assert.Equal(Fichas.Aspa, tablero.GetGanador());
         }
 
         [Fact]
@@ -83,14 +90,18 @@ namespace tresenraya.domain.test
         {
             Tablero tablero = new Tablero();
 
-            tablero.AddFicha(Fichas.Aspa, new Posicion(0, 2));
-            tablero.AddFicha(Fichas.Circulo, new Posicion(1, 2));
+            tablero.AddFicha(Fichas.Aspa, new Posicion(0, 3));
+            tablero.AddFicha(Fichas.Circulo, new Posicion(1, 3));
 
-            tablero.AddFicha(Fichas.Aspa, new Posicion(1, 1));
+            tablero.AddFicha(Fichas.Aspa, new Posicion(1, 2));
             tablero.AddFicha(Fichas.Circulo, new Posicion(2, 2));
-            
+
+            tablero.AddFicha(Fichas.Aspa, new Posicion(2, 1));
+            tablero.AddFicha(Fichas.Circulo, new Posicion(2, 3));
+
+
             Assert.Equal(null, tablero.GetGanador());
-            tablero.AddFicha(Fichas.Aspa, new Posicion(2, 0));
+            tablero.AddFicha(Fichas.Aspa, new Posicion(3, 0));
             Assert.Equal(Fichas.Aspa, tablero.GetGanador());
         }
 
