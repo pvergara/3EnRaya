@@ -34,6 +34,7 @@
     <Compile Include="PosicionSpec.cs" />
     <Compile Include="TableroTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TurnoSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tresenraya.domain\tresenraya.domain.csproj">
