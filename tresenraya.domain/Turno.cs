@@ -1,4 +1,6 @@
-﻿namespace tresenraya.domain
+using System;
+
+namespace tresenraya.domain
 {
     public class Turno
     {
@@ -19,6 +21,11 @@
                 _fichaActual = Fichas.Aspa;
 
             return resultado;
+        }
+
+        public void ReiniciarPartida()
+        {
+            _fichaActual = Fichas.Aspa;
         }
     }
 }

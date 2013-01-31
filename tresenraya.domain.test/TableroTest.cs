@@ -16,14 +16,15 @@ namespace tresenraya.domain.test
         
         [Fact]
         public void si_añado_una_ficha_a_un_tablero_iniciado_este_contendra_una_ficha_en_la_posicion_indicada()
-        {
-            const Fichas ficha = Fichas.Aspa;
+        {         
             var tablero = new Tablero();
+            var turno = new Turno();
+            var ficha = turno.GetFichaActual();
 
             byte fila = 0;
             byte columna = 2;
             var posicion = new Posicion(fila,columna);
-            tablero.AddFicha(ficha,posicion);
+            tablero.AddFicha(ficha, posicion);
            
             Assert.Equal(1,tablero.GetNumeroFichas());
             Assert.Equal(ficha,tablero.GetFicha(posicion));
@@ -53,49 +54,54 @@ namespace tresenraya.domain.test
         public void si_todas_las_fichas_de_misma_fila_son_iguales_ganan_esas_fichas()
         {
             Tablero tablero = new Tablero();
-
+            var turno = new Turno();
             
             for (byte i = 0; i < DimensionTableroMenosUno; i++)
             {
-                tablero.AddFicha(Fichas.Aspa, new Posicion(0,i));
-                tablero.AddFicha(Fichas.Circulo, new Posicion(1,i));
+                tablero.AddFicha(turno.GetFichaActual(), new Posicion(0,i));
+                tablero.AddFicha(turno.GetFichaActual(), new Posicion(1,i));
             }
 
             Assert.Equal(null, tablero.GetGanador());
-            tablero.AddFicha(Fichas.Aspa, new Posicion(0, DimensionTableroMenosUno));
-            Assert.Equal(Fichas.Aspa, tablero.GetGanador());
+            var ficha = turno.GetFichaActual();
+            tablero.AddFicha(ficha, new Posicion(0, DimensionTableroMenosUno));
+            Assert.Equal(ficha, tablero.GetGanador());
         }
 
         [Fact]
         public void si_todas_las_fichas_de_misma_columna_son_iguales_ganan_esas_fichas()
         {
             Tablero tablero = new Tablero();
+            var turno = new Turno();
 
             for (byte i = 0; i < DimensionTableroMenosUno; i++)
             {
-                tablero.AddFicha(Fichas.Aspa, new Posicion(i, 1));
-                tablero.AddFicha(Fichas.Circulo, new Posicion(i, 0));
+                tablero.AddFicha(turno.GetFichaActual(), new Posicion(i, 1));
+                tablero.AddFicha(turno.GetFichaActual(), new Posicion(i, 0));
             }
 
             Assert.Equal(null, tablero.GetGanador());
-            tablero.AddFicha(Fichas.Aspa, new Posicion ( DimensionTableroMenosUno,1));
-            Assert.Equal(Fichas.Aspa, tablero.GetGanador());
+            var ficha = turno.GetFichaActual();
+            tablero.AddFicha(ficha, new Posicion ( DimensionTableroMenosUno,1));
+            Assert.Equal(ficha, tablero.GetGanador());
         }
 
         [Fact]
         public void si_todas_las_fichas_de_misma_diagonal_son_iguales_ganan_esas_fichas()
         {
             var tablero = new Tablero();
+            var turno = new Turno();
             
             for (byte i = 0; i < DimensionTableroMenosUno; i++)
             {
-                tablero.AddFicha(Fichas.Aspa, new Posicion(i, i));
-                tablero.AddFicha(Fichas.Circulo, new Posicion(i, (byte) (i+1)));
+                tablero.AddFicha(turno.GetFichaActual(), new Posicion(i, i));
+                tablero.AddFicha(turno.GetFichaActual(), new Posicion(i, (byte)(i + 1)));
             }
 
             Assert.Equal(null, tablero.GetGanador());
-            tablero.AddFicha(Fichas.Aspa, new Posicion(DimensionTableroMenosUno, DimensionTableroMenosUno));
-            Assert.Equal(Fichas.Aspa, tablero.GetGanador());
+            var ficha = turno.GetFichaActual();
+            tablero.AddFicha(ficha, new Posicion(DimensionTableroMenosUno, DimensionTableroMenosUno));
+            Assert.Equal(ficha, tablero.GetGanador());
         }
 
         [Fact]
@@ -103,7 +109,8 @@ namespace tresenraya.domain.test
         {
             //Arrange
             var tablero = new Tablero();
-            const Fichas ficha = Fichas.Aspa;
+            var turno = new Turno();
+            var ficha = turno.GetFichaActual();
             const byte fila = 0;
             const byte columna = 0;
             var posicion = new Posicion(fila,columna);

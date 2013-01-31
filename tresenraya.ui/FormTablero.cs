@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using tresenraya.domain;
@@ -7,10 +7,13 @@ namespace tresenraya.ui
 {
     public partial class FormTablero : Form
     {
+        private readonly Turno _turno;
+
         public FormTablero()
         {
             InitializeComponent();
             pictureBoxLineasDivisorias.Paint += PictureBox1Paint;
+            _turno = new Turno();
             AñadirBotones();
             this.pictureBoxLineasDivisorias.SendToBack();
         }
@@ -31,6 +34,13 @@ namespace tresenraya.ui
             {
                 btnFin.Visible = true;
                 pictureBoxLineasDivisorias.Enabled = false;
+            }
+        }
+
+        protected Fichas TurnoFicha
+        {
+            get {
+                return _turno.GetFichaActual();
             }
         }
 
@@ -101,26 +111,10 @@ namespace tresenraya.ui
             return "O";
         }
 
-        //TODO: Esto es para simular el turno mientras no está construido
-        private Fichas _fichaTurno = Fichas.Aspa;
-        private Fichas TurnoFicha
-        {
-            get
-            {
-                if (_fichaTurno == Fichas.Aspa)
-                {
-                    _fichaTurno = Fichas.Circulo;
-                    return Fichas.Aspa;
-                }
-
-                _fichaTurno = Fichas.Aspa;
-                return Fichas.Circulo;
-            }
-        }
-
         private void ButtonNuevaPartidaClick(object sender, EventArgs e)
         {
             tablero=new Tablero();
+            _turno.ReiniciarPartida();
             refreshTablero();
             btnFin.Visible = false;
         }
