@@ -8,32 +8,32 @@ namespace tresenraya.wpf.ui.test
     public class ShellViewModelSpecs
     {
         [Test]
-        public void init()
+        public void CuandoInicioLaPantallaDelJuegoEntoncesElTableroEstaVacioYElTurnoEstaPreparadoParaQueElPrimerJugadorEmpieceConUnAspa()
         {
+            #region
+            //TDD vs BDD
+            //-------------
+            //Given. Dado un contexto determinado
+            //When. Cuando pasa una acción que queremos testear
+            //Then. Entonces assert 1
+            //Then. Entonces assert 2
+            //...
+            //Then. Entonces assert N
+            #endregion
+
+            #region
+            //"".Context(() => { });
+            //"Cuando inicio la pantalla del juego".Do(() => { });
+
+            //"El tablero está vacío".Assert(() => { });
+
+            //"YElTurnoEstaPreparadoParaQueElPrimerJugadorEmpieceConUnAspa".Assert(() => { });
+            #endregion
+            
             var shellViewModel = new ShellViewModel();
 
             Assert.AreEqual(0, shellViewModel.Tablero.GetNumeroFichas());
 
-            Assert.AreEqual(Fichas.Aspa, shellViewModel.Turno.GetFichaActual());
-        }
-
-        [Test]
-        public void si_empiezo_a_jugar_y_pulso_sobre_iniciar_partida_esta_vuelve_al_estado_inicial()
-        {
-            //Arrange
-            var shellViewModel = new ShellViewModel();
-            //TODO PASAR A COMANDO
-            var fichaActual = shellViewModel.Turno.GetFichaActual();
-            shellViewModel.Tablero.AddFicha(fichaActual, new Posicion(0, 0));
-
-            Assert.AreNotEqual(0, shellViewModel.Tablero.GetNumeroFichas());
-            Assert.AreNotEqual(Fichas.Circulo, fichaActual);
-
-            //Action
-            shellViewModel.IniciarNuevaPartida();
-
-            //Assert
-            Assert.AreEqual(0, shellViewModel.Tablero.GetNumeroFichas());
             Assert.AreEqual(Fichas.Aspa, shellViewModel.Turno.GetFichaActual());
         }
 
@@ -42,15 +42,30 @@ namespace tresenraya.wpf.ui.test
         {
             //Arrange
             var shellViewModel = new ShellViewModel();
-            var posicion = new Posicion(0, 0);
-            shellViewModel.Tablero.AddFicha(Fichas.Aspa, posicion);
 
             //Action
-            var ficha = shellViewModel.Tablero.GetFicha(posicion);
+            shellViewModel.AnhadirFicha(0, 0);
 
             //Assert
-            Assert.AreEqual(Fichas.Aspa, ficha);
+            Assert.AreEqual(Fichas.Aspa, shellViewModel.Tablero.GetFicha(new Posicion(0, 0)));
+        }
 
+        [Test]
+        public void DadaUnaPartidaIniciadaConUnMovimientoCuandoPulsoSobreIniciarNuevaPartidaEntoncesElTableroSeReiniciaYElTurnoEsAspa()
+        {
+            //Arrange
+            var shellViewModel = new ShellViewModel();
+            shellViewModel.AnhadirFicha(0, 0);
+
+            Assert.AreNotEqual(0, shellViewModel.Tablero.GetNumeroFichas());
+            Assert.AreNotEqual(Fichas.Circulo, shellViewModel.Tablero.GetFicha(new Posicion(0, 0)));
+
+            //Action
+            shellViewModel.IniciarNuevaPartida();
+
+            //Assert
+            Assert.AreEqual(0, shellViewModel.Tablero.GetNumeroFichas());
+            Assert.AreEqual(Fichas.Aspa, shellViewModel.Turno.GetFichaActual());
         }
     }
 }

@@ -24,5 +24,12 @@ namespace tresenraya.wpf.ui.Views
             Tablero = _juego.Tablero;
             //Turno = _juego.Turno;
         }
+
+        public void AnhadirFicha(byte fila, byte columna)
+        {
+            var fichaActual = Turno.GetFichaActual();
+            Tablero.AddFicha(fichaActual, new Posicion(fila, columna));
+            
+        }
     }
 }
