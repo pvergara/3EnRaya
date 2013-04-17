@@ -1,6 +1,10 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using Moq;
+using NUnit.Framework;
 using tresenraya.domain;
 using tresenraya.wpf.ui.Views;
+using Xunit;
+using Assert = NUnit.Framework.Assert;
 
 namespace tresenraya.wpf.ui.test
 {
@@ -67,5 +71,29 @@ namespace tresenraya.wpf.ui.test
             Assert.AreEqual(0, shellViewModel.Tablero.GetNumeroFichas());
             Assert.AreEqual(Fichas.Aspa, shellViewModel.Turno.GetFichaActual());
         }
+
+        [Fact]
+        public void FactMethodName()
+        {
+            //Arrange
+            //var viewModel = new OtroViewModel(new Servicio());
+            var mock = new Mock<IServicio>();
+            mock.
+                Setup(s => s.ObtenerDatosMaestros()).
+                Returns(new[] {"perico"});
+            var viewModel = new OtroViewModel(mock.Object);
+            viewModel.Servicio2 = mock.Object;
+           
+            //Act
+            viewModel.ObtenerMaestros();
+
+            //Asserts
+            //Assert.True(viewModel.Maestros.Contains("perico"));
+
+            //Asserts
+            mock.Verify(s=>s.ObtenerDatosMaestros(),Times.Once());
+        }
+
+
     }
 }
