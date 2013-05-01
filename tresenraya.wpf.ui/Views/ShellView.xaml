@@ -1,4 +1,4 @@
-﻿<Window x:Class="tresenraya.wpf.ui.Views.ShellView"
+<Window x:Class="tresenraya.wpf.ui.Views.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:micro="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" 
@@ -21,6 +21,7 @@
           Margin="103,201,0,0"
           VerticalAlignment="Top"
           Width="75"
+          IsEnabled="{Binding EstadosTablero[0]}" 
           micro:Message.Attach="AnhadirFicha(0,0)"
         />
 

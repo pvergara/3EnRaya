@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 using tresenraya.domain;
 using tresenraya.wpf.ui.Views;
 
@@ -8,7 +9,7 @@ namespace tresenraya.wpf.ui.test
     public class ShellViewModelSpecs
     {
         [Test]
-        public void CuandoInicioLaPantallaDelJuegoEntoncesElTableroEstaVacioYElTurnoEstaPreparadoParaQueElPrimerJugadorEmpieceConUnAspa()
+        public void CuandoInicioLaPantallaDelJuegoEntoncesElTableroEstaVacioYLosEstadosDelTableroSeranTodosTrueYElTurnoEstaPreparadoParaQueElPrimerJugadorEmpieceConUnAspa()
         {
             #region
             //TDD vs BDD
@@ -35,6 +36,9 @@ namespace tresenraya.wpf.ui.test
             Assert.AreEqual(0, shellViewModel.Tablero.GetNumeroFichas());
 
             Assert.AreEqual(Fichas.Aspa, shellViewModel.Turno.GetFichaActual());
+
+            Assert.IsTrue(shellViewModel.EstadosTablero.Count>0);
+            Assert.IsTrue(shellViewModel.EstadosTablero.All(e=>e));
         }
 
         [Test]
@@ -51,7 +55,7 @@ namespace tresenraya.wpf.ui.test
         }
 
         [Test]
-        public void DadaUnaPartidaIniciadaConUnMovimientoCuandoPulsoSobreIniciarNuevaPartidaEntoncesElTableroSeReiniciaYElTurnoEsAspa()
+        public void DadaUnaPartidaIniciadaConUnMovimientoCuandoPulsoSobreIniciarNuevaPartidaEntoncesElTableroSeReiniciaYElTurnoEsAspaYLosEstadosDelTableroSeranTodosTrue()
         {
             //Arrange
             var shellViewModel = new ShellViewModel();
@@ -66,6 +70,34 @@ namespace tresenraya.wpf.ui.test
             //Assert
             Assert.AreEqual(0, shellViewModel.Tablero.GetNumeroFichas());
             Assert.AreEqual(Fichas.Aspa, shellViewModel.Turno.GetFichaActual());
+
+            Assert.IsTrue(shellViewModel.EstadosTablero.All(e => e));
+
+        }
+
+        [Test]
+        public void DadaUnaPartidaIniciadaSinMovimientosCuandoPulsoUnBotonSeDesactivaElBoton()
+        {
+            //Dada
+            var viewModel =new ShellViewModel();
+            var posicionCeroCero = 0;
+
+            //Cuando
+            viewModel.AnhadirFicha(0,0);
+
+            //Entonces
+            Assert.IsFalse(viewModel.EstadosTablero[posicionCeroCero]);
+        }
+
+
+        [Test]
+        public void DadaUnaPartidaIniciadaConMovimientosCuandoAnhadoUnaFichaQueCompletaUnaLineaDelMismoTipoEntoncesSeDesactivanTodosLosBotonesDelTableroYSeMuestraUnMensajeIndicandoElGanador()
+        {
+        }
+
+        [Test]
+        public void DadaUnaPartidaIniciadaConMovimientosCuandoAnhadoLaUltimaFichaPosbileYNoHayVencedorSeMuestraUnMensajeDeTablas()
+        {
         }
     }
 }
